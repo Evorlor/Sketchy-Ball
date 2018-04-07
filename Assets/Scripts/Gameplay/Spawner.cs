@@ -51,7 +51,7 @@ namespace Sketchy.Gameplay
             bool positionAvailable = !Physics2D.OverlapCircle(spawnPosition, spawnPrefab.GetExtents().magnitude);
             if (positionAvailable)
             {
-                var spawn = Instantiate(spawnPrefab, spawnPosition, Quaternion.identity, transform);
+                Instantiate(spawnPrefab, spawnPosition, Quaternion.identity, transform);
                 spawnTimeRemaining = MathUtility.GetRandomFloat(spawnRate);
             }
             else

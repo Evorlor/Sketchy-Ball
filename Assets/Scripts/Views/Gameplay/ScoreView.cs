@@ -28,7 +28,10 @@ namespace Sketchy.Gameplay
         /// <param name="show">Whether or not to show the scoreboard</param>
         internal void ShowScoreboard(bool show)
         {
-            scoreboard.gameObject.SetActive(show);
+            if(scoreboard)
+            {
+                scoreboard.gameObject.SetActive(show);
+            }
         }
     }
 }

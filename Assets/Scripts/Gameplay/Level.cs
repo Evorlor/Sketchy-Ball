@@ -23,7 +23,7 @@ namespace Sketchy.Gameplay
 
         [Tooltip("GameObject to attach walls to.  Leave empty if no walls are wanted")]
         [SerializeField]
-        private GameObject walls;
+        private GameObject wallsGameObject;
 
         private const string WallsGameObjectName = "Walls";
         private static readonly Vector2 ScrollDirection = Vector2.down;
@@ -33,7 +33,7 @@ namespace Sketchy.Gameplay
         private void Start()
         {
             background.material.mainTextureOffset = mainTextureOffset;
-            if (walls)
+            if (wallsGameObject)
             {
                 CreateWalls();
             }
@@ -64,8 +64,7 @@ namespace Sketchy.Gameplay
 
         private void CreateWalls()
         {
-            var leftWall = walls.AddComponent<EdgeCollider2D>();
-            var rightWall = walls.AddComponent<EdgeCollider2D>();
+            var walls = wallsGameObject.GetComponents<EdgeCollider2D>();
             float yExtent = Camera.main.orthographicSize;
             float xExtent = (float)Screen.width / Screen.height * yExtent;
             var leftWallPoints = new Vector2[2]
@@ -73,13 +72,13 @@ namespace Sketchy.Gameplay
                     new Vector2(-xExtent, -yExtent),
                     new Vector2(-xExtent, yExtent)
                 };
-            leftWall.points = leftWallPoints;
+            walls[0].points = leftWallPoints;
             var rightWallPoints = new Vector2[2]
                 {
                     new Vector2(xExtent, -yExtent),
                     new Vector2(xExtent, yExtent)
                 };
-            rightWall.points = rightWallPoints;
+            walls[1].points = rightWallPoints;
         }
     }
 }

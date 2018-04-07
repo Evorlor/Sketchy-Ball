@@ -6,9 +6,15 @@ namespace Sketchy.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public static ScoreManager ScoreManager { get; private set; }
+        /// <summary>
+        /// The ScoreManager for the game
+        /// </summary>
+        internal static ScoreManager ScoreManager { get; private set; }
         
-        public static CoinsManager CoinsManager { get; private set; }
+        /// <summary>
+        /// The coin manager for the game
+        /// </summary>
+        internal static CoinsManager CoinsManager { get; private set; }
 
         private void OnEnable()
         {

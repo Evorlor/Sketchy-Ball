@@ -28,7 +28,10 @@ namespace Sketchy.Gameplay
         /// <param name="show">Whether or not to show the coinboard</param>
         internal void ShowCoinboard(bool show)
         {
-            coinboard.gameObject.SetActive(show);
+            if(coinboard)
+            {
+                coinboard.SetActive(show);
+            }
         }
     }
 }
