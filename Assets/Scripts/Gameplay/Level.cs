@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sketchy.Managers;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Sketchy.Gameplay
@@ -14,7 +15,7 @@ namespace Sketchy.Gameplay
 
         [Tooltip("Acceleration rate of level's scroll speed, in terms of units per second")]
         [SerializeField]
-        [Range(0.0f, 1.0f)]
+        [Range(0.0f, 2.0f)]
         private float accelerationRate = 0.1f;
 
         [Tooltip("Background, which is to be scrolled at the speed of the level")]
@@ -25,10 +26,20 @@ namespace Sketchy.Gameplay
         [SerializeField]
         private GameObject wallsGameObject;
 
+        [Tooltip("How fast the scroll speed accelerates after game over")]
+        [SerializeField]
+        [Range(0.0f, 9.81f)]
+        private float gameOverAcceleration = 1.0f;
+
         private const string WallsGameObjectName = "Walls";
         private static readonly Vector2 ScrollDirection = Vector2.down;
 
         private static Vector2 mainTextureOffset = Vector2.zero;
+
+        private void OnEnable()
+        {
+            GameplayManager.OnGameOver += ClearLevel;
+        }
 
         private void Start()
         {
@@ -43,6 +54,11 @@ namespace Sketchy.Gameplay
         {
             ScrollLevel();
             AccelerateScrollSpeed();
+        }
+
+        private void OnDisable()
+        {
+            GameplayManager.OnGameOver -= ClearLevel;
         }
 
         private void ScrollLevel()
@@ -79,6 +95,11 @@ namespace Sketchy.Gameplay
                     new Vector2(xExtent, yExtent)
                 };
             walls[1].points = rightWallPoints;
+        }
+
+        private void ClearLevel()
+        {
+            accelerationRate = gameOverAcceleration;
         }
     }
 }

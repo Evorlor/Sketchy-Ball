@@ -3,6 +3,11 @@
     public static class SceneNames
     {
         /// <summary>
+        /// Name of scene used to preload data and set initial settings
+        /// </summary>
+        internal const string Launch = "Launch";
+
+        /// <summary>
         /// Name of the main scene
         /// </summary>
         internal const string Main = "Main";

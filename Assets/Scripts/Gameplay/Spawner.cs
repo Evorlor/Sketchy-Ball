@@ -1,5 +1,4 @@
 ﻿using Sketchy.Extensions;
-using Sketchy.Modules;
 using Sketchy.Utilities;
 using UnityEngine;
 
@@ -21,6 +20,15 @@ namespace Sketchy.Gameplay
         [Range(-1.0f, 1.0f)]
         private float spawnRateChange = 0.0f;
 
+        [Tooltip("Delay before first spawn starts")]
+        [SerializeField]
+        [Range(0.0f, 60.0f)]
+        private float firstSpawnDelay = 0.0f;
+
+        [Tooltip("Whether or not to use linear spawn rates, opposed to average spawn rates")]
+        [SerializeField]
+        private bool linearSpawning = false;
+
         private float spawnTimeRemaining;
         private float minSpawnX;
         private float maxSpawnX;
@@ -29,7 +37,7 @@ namespace Sketchy.Gameplay
         private void Start()
         {
             SetSpawnArea();
-            spawnTimeRemaining = MathUtility.GetRandomFloat(spawnRate);
+            spawnTimeRemaining = GetNextSpawnTime() + firstSpawnDelay;
         }
 
         private void Update()
@@ -52,7 +60,7 @@ namespace Sketchy.Gameplay
             if (positionAvailable)
             {
                 Instantiate(spawnPrefab, spawnPosition, Quaternion.identity, transform);
-                spawnTimeRemaining = MathUtility.GetRandomFloat(spawnRate);
+                spawnTimeRemaining = GetNextSpawnTime();
             }
             else
             {
@@ -66,6 +74,11 @@ namespace Sketchy.Gameplay
             maxSpawnX = (float)Screen.width / Screen.height * Camera.main.orthographicSize - spawnExtents.x;
             minSpawnX = maxSpawnX * -1.0f;
             spawnY = -Camera.main.orthographicSize - spawnExtents.y;
+        }
+
+        private float GetNextSpawnTime()
+        {
+            return linearSpawning ? spawnRate : MathUtility.GetRandomFloat(spawnRate);
         }
     }
 }

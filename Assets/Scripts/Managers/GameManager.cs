@@ -10,7 +10,7 @@ namespace Sketchy.Managers
         /// The ScoreManager for the game
         /// </summary>
         internal static ScoreManager ScoreManager { get; private set; }
-        
+
         /// <summary>
         /// The coin manager for the game
         /// </summary>
@@ -27,9 +27,19 @@ namespace Sketchy.Managers
         {
             ScoreManager = new ScoreManager();
             CoinsManager = new CoinsManager();
-            SceneManager.LoadScene(SceneNames.Gameplay, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(SceneNames.Gameplay, LoadSceneMode.Additive);
             SceneManager.LoadScene(SceneNames.Menu, LoadSceneMode.Additive);
         }
+
+#if UNITY_ANDROID
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+        }
+#endif
 
         private void OnDisable()
         {

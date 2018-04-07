@@ -68,7 +68,20 @@ namespace Sketchy.Gameplay
         private void CreateClone(bool rightSideClone)
         {
             playerClone = Instantiate(this, GetClonePosition(rightSideClone), Quaternion.identity, transform.parent);
+            playerClone.body2D.isKinematic = true;
             playerClone.clone = true;
+        }
+
+        private void SwapClones()
+        {
+            clone = true;
+            playerClone.clone = false;
+            body2D.isKinematic = true;
+            playerClone.body2D.isKinematic = false;
+            playerClone.body2D.angularVelocity = body2D.angularVelocity;
+            playerClone.body2D.velocity = body2D.velocity;
+            playerClone.playerClone = this;
+            playerClone = null;
         }
 
         private void ForceCloneToMimic()
@@ -77,16 +90,6 @@ namespace Sketchy.Gameplay
             var clonePosition = GetClonePosition(rightSideClone);
             playerClone.transform.position = clonePosition;
             playerClone.transform.rotation = transform.rotation;
-        }
-
-        private void SwapClones()
-        {
-            clone = true;
-            playerClone.clone = false;
-            playerClone.body2D.angularVelocity = body2D.angularVelocity;
-            playerClone.body2D.velocity = body2D.velocity;
-            playerClone.playerClone = this;
-            playerClone = null;
         }
 
         private Vector2 GetClonePosition(bool rightSideClone)

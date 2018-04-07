@@ -110,13 +110,19 @@ namespace Sketchy.Managers
 
         private void EarnScore(float score)
         {
-            GameManager.ScoreManager.SetHighScore(score);
+            if (GameManager.ScoreManager != null)
+            {
+                GameManager.ScoreManager.SetHighScore(score);
+            }
         }
 
         private void EarnCoins(float coins)
         {
-            GameManager.CoinsManager.SetCoins(GameManager.CoinsManager.GetCoins() + coins);
-            GameManager.CoinsManager.SetLifetimeCoins(GameManager.CoinsManager.GetLifetimeCoins() + coins);
+            if (GameManager.CoinsManager != null)
+            {
+                GameManager.CoinsManager.SetCoins(GameManager.CoinsManager.GetCoins() + coins);
+                GameManager.CoinsManager.SetLifetimeCoins(GameManager.CoinsManager.GetLifetimeCoins() + coins);
+            }
         }
     }
 }
